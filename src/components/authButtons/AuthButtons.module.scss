@@ -1,0 +1,14 @@
+@import '../../app/variables.scss';
+
+.logout {
+  background-color: $primaryColor;
+  color: white;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  transition: $mainTransition;
+  &:hover {
+    background-color: rgb($primaryColor, 0.8);
+  }
+}
