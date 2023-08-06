@@ -1,0 +1,26 @@
+@import '@scss/variables.scss';
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 3rem;
+  border: 0.125rem solid $secondaryColor;
+  border-radius: 1.875rem;
+  padding: 0.125rem 0.25rem;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  .icon {
+    font-size: 1rem;
+    svg {
+      font-size: 1rem;
+    }
+  }
+  .ball {
+    width: 1.125rem;
+    height: 1.125rem;
+    background-color: $primaryColor;
+    position: absolute;
+    border-radius: 50%;
+  }
+}

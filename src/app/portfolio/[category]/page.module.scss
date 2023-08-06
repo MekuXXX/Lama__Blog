@@ -1,0 +1,61 @@
+@import '@scss/variables.scss';
+.container {
+  .catTitle {
+    color: $primaryColor;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 3.125rem;
+    margin: 3.125rem 0 6.25rem;
+    &:nth-child(2n + 1) {
+      flex-flow: row-reverse;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-flow: column;
+      gap: 1.25rem;
+      .title {
+        font: {
+          size: 2.5rem;
+        }
+      }
+      .desc {
+        font: {
+          size: 1.25rem;
+        }
+      }
+    }
+    .imgCont {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      min-height: 31.25rem;
+      img {
+        object-fit: cover;
+      }
+    }
+    @media (max-width: 992px) {
+      flex-flow: column-reverse;
+      gap: 1.125rem;
+      &:nth-child(2n + 1) {
+        flex-flow: column-reverse;
+      }
+      .content {
+        gap: 1rem;
+        .title {
+          font: {
+            size: 2rem;
+          }
+        }
+        .desc {
+          text-align: justify;
+          font: {
+            size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

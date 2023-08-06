@@ -1,0 +1,8 @@
+@import '@scss/variables.scss';
+@import '@scss/mixins.scss';
+.button {
+  padding: 1.25rem;
+  text-transform: capitalize;
+  @include button(white, $primaryColor, $mainRadius, $mainTransition);
+  width: max-content;
+}

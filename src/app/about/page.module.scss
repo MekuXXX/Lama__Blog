@@ -1,3 +1,48 @@
+@import '@scss/variables.scss';
 .container {
-  background-color: red;
+  .imgCont {
+    position: relative;
+    width: 100%;
+    min-height: 18.875rem;
+    .img {
+      object-fit: cover;
+      filter: grayscale(100%);
+    }
+    .imgText {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      background-color: $primaryColor;
+      color: white;
+      padding: 0.5rem;
+    }
+    @media (max-width: 992px) {
+      .imgText {
+        left: 0;
+        text-align: center;
+      }
+    }
+  }
+  .textCont {
+    display: flex;
+    gap: 11.25rem;
+    margin-top: 5rem;
+    .item {
+      flex: 1;
+      display: flex;
+      flex-flow: column;
+      gap: 1.875rem;
+      .desc {
+        font: {
+          size: 1.125rem;
+          weight: 300;
+        }
+        text-align: justify;
+      }
+    }
+    @media (max-width: 992px) {
+      flex-flow: column;
+      gap: 3rem;
+    }
+  }
 }

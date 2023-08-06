@@ -1,4 +1,8 @@
+@import '@scss/variables.scss';
+@import '@scss/mixins.scss';
+$triangleDimentions: 1.25rem;
 .container {
+  position: relative;
   height: 6rem;
   display: flex;
   justify-content: space-between;
@@ -6,12 +10,67 @@
   .logo {
     font: {
       weight: bold;
-      size: 1.375rem;
+      size: 2.375rem;
     }
   }
-  .links {
+  .rightSide {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: 0.5rem;
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .logout {
+      padding: 0.25rem 0.5rem;
+      @include button(white, $primaryColor, $secondaryRadius, $mainTransition);
+    }
+    .menu {
+      display: none;
+      cursor: pointer;
+    }
+    @media (max-width: 992px) {
+      .links {
+        display: none;
+        opacity: 0;
+        transition: $mainTransition;
+        &.active {
+          opacity: 1;
+          z-index: 999;
+          display: flex;
+          flex-flow: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: $primaryColor;
+          align-items: start;
+          padding: 1rem 0;
+          &::before {
+            content: '';
+            border: $triangleDimentions solid;
+            border-color: transparent transparent $primaryColor transparent;
+            position: absolute;
+            right: $triangleDimentions / 4;
+            top: -$triangleDimentions + -$triangleDimentions;
+            z-index: 999;
+          }
+          .link {
+            flex: 1;
+            padding: 1rem 2rem;
+            color: white;
+            transition: $mainTransition;
+            &:hover {
+              padding-left: 3rem;
+            }
+          }
+        }
+      }
+      .menu {
+        display: block;
+        font-size: 2.375rem;
+      }
+    }
   }
 }
