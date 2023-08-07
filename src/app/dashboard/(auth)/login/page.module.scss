@@ -1,0 +1,33 @@
+@import '@scss/variables.scss';
+@import '@scss/mixins.scss';
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  gap: 1.25rem;
+  .form {
+    width: 20rem;
+    display: flex;
+    flex-flow: column;
+    gap: 1.25rem;
+    .input {
+      padding: 1.25rem;
+      background: transparent;
+      border: 0.125rem solid #bbb;
+      color: white;
+      border-radius: $secondaryRadius;
+    }
+    .button {
+      padding: 1rem 1.5rem;
+      @include button(#eee, $primaryColor, $secondaryRadius, $mainTransition);
+    }
+  }
+  .register {
+    display: block;
+    padding: 1rem 1.5rem;
+    width: 20rem;
+    text-align: center;
+    @include button(#eee, $secondaryColor, $secondaryRadius, $mainTransition);
+  }
+}

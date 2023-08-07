@@ -2,14 +2,25 @@ import { notFound } from 'next/navigation';
 import { postType } from '../page';
 import styles from './page.module.scss';
 import Image from 'next/image';
+import { Metadata } from 'next';
 type Props = {
   params: { id: string };
 };
 
 async function getData(id: string) {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${id}`,
+    { next: { revalidate: 60 } },
+  );
   if (!res.ok) return notFound();
   return res.json();
+}
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const post: postType = await getData(params.id);
+  return {
+    title: post.title,
+    description: post.description,
+  };
 }
 
 export default async function BlogPost({ params: { id } }: Props) {
@@ -22,22 +33,22 @@ export default async function BlogPost({ params: { id } }: Props) {
             {post.title[0].toUpperCase() + post.title.slice(1)}
           </h1>
           <p className={styles.desc}>
-            {post.body[0].toUpperCase() + post.body.slice(1)}
+            {post.description?.[0].toUpperCase() + post.description?.slice(1)}
           </p>
           <div className={styles.author}>
             <Image
-              src={`https://images.pexels.com/photos/23547/pexels-photo.jpg`}
+              src={post.img}
               alt=''
               width={40}
               height={40}
               className={styles.avatar}
             />
-            <span className={styles.username}>John Doe</span>
+            <span className={styles.username}>{post.username}</span>
           </div>
         </div>
         <div className={styles.imageContainer}>
           <Image
-            src={`https://images.pexels.com/photos/23547/pexels-photo.jpg`}
+            src={post.img}
             alt='Blog image'
             fill={true}
             className={styles.image}
@@ -45,15 +56,7 @@ export default async function BlogPost({ params: { id } }: Props) {
         </div>
       </div>
       <div className={styles.content}>
-        <p className={styles.text}>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur cum
-          at suscipit iusto odio deserunt praesentium modi in quaerat aperiam
-          blanditiis deleniti ipsa, doloremque tempore iste nulla dolorem sed
-          vero ea? Aut quisquam quas ut quasi, vero molestias in. Natus
-          doloremque soluta perspiciatis ipsam maxime voluptate accusantium
-          eius, eaque et.
-          `https://images.pexels.com/photos/23547/pexels-photo.jpg`
-        </p>
+        <p className={styles.text}>{post.content}</p>
       </div>
     </div>
   );

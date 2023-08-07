@@ -1,0 +1,16 @@
+.container {
+  min-height: 4.125rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container .socials {
+  display: flex;
+  gap: 0.5rem;
+  transition: 0.4s;
+}
+.container .socials .icon {
+  opacity: 0.6;
+  cursor: pointer;
+}/*# sourceMappingURL=Footer.module.css.map */

@@ -2,6 +2,13 @@
 import Button from '@/components/button/Button';
 import styles from './page.module.scss';
 import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description: 'Learn NextJS',
+};
+
 type Props = {};
 export default function Contact({}: Props) {
   return (

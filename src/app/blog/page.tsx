@@ -3,27 +3,33 @@ import Image from 'next/image';
 import Link from 'next/link';
 type Props = {};
 export type postType = {
-  userId: number;
-  id: number;
+  _id?: number;
+  username: string;
   title: string;
-  body: string;
+  content: string;
+  img: string;
+  description: string;
 };
 async function getData() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+    cache: 'no-store',
+  });
   if (!res.ok) throw new Error('Failed fetch data');
   return res.json();
 }
 
 export default async function Blog({}: Props) {
   const data: postType[] = await getData();
+  console.log(data);
   return (
     <div className={styles.container}>
       <h1 className={styles.mainTitle}>Blogs</h1>
       {data.map(post => (
-        <Link href={`/blog/${post.id}`} className={styles.item} key={post.id}>
+        <Link href={`/blog/${post._id}`} className={styles.item} key={post._id}>
           <div className={styles.imgCont}>
             <Image
-              src={`https://images.pexels.com/photos/23547/pexels-photo.jpg`}
+              priority={true}
+              src={post.img}
               alt='Category image'
               className={styles.img}
               fill={true}
@@ -34,7 +40,7 @@ export default async function Blog({}: Props) {
               {post.title[0].toUpperCase() + post.title.slice(1)}
             </h1>
             <p className={styles.desc}>
-              {post.body[0].toUpperCase() + post.body.slice(1)}
+              {post.description?.[0].toUpperCase() + post.description?.slice(1)}
             </p>
           </div>
         </Link>

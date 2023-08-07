@@ -22,7 +22,6 @@ export function ThemeProvider({ children }: Props) {
     mode,
     toggle,
   };
-  console.log(mode);
   return (
     <ThemeContext.Provider value={themeContextValue}>
       <div className={`theme ${mode}`}>{children}</div>

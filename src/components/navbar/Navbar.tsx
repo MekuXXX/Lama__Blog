@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './Navbar.module.scss';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import ModeButton from '../modeButton/ModeButton';
+import { signOut, useSession } from 'next-auth/react';
 type Props = {};
 const links = [
   {
@@ -36,12 +37,12 @@ const links = [
     url: '/dashboard',
   },
 ];
-
 export default function Navbar({}: Props) {
   const [active, setActive] = useState<boolean>(false);
+  const session = useSession();
   const menuRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    // Add click event listener to the document
+    // Add click event listener to the documentvscode-file://vscode-app/c:/Users/MekuX/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setActive(false);
@@ -69,9 +70,12 @@ export default function Navbar({}: Props) {
             </Link>
           ))}
         </div>
-        <button className={styles.logout} onClick={() => console.log('Logout')}>
-          Logout
-        </button>
+        {session.status === 'authenticated' && (
+          <button className={styles.logout} onClick={() => signOut()}>
+            Logout
+          </button>
+        )}
+
         <div
           className={styles.menu}
           onClick={() => setActive(prev => !prev)}

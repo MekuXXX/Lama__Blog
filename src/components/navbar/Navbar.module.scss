@@ -23,7 +23,7 @@ $triangleDimentions: 1.25rem;
       gap: 1.25rem;
     }
     .logout {
-      padding: 0.25rem 0.5rem;
+      padding: 0.5rem 0.75rem;
       @include button(white, $primaryColor, $secondaryRadius, $mainTransition);
     }
     .menu {
