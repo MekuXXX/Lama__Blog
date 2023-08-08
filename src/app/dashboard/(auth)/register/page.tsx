@@ -3,9 +3,11 @@ import Link from 'next/link';
 import styles from './page.module.scss';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 type Props = {};
 export default function Register({}: Props) {
   const [err, setErr] = useState<boolean>(false);
+  const session = useSession();
   const router = useRouter();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +28,8 @@ export default function Register({}: Props) {
       setErr(true);
     }
   };
+  if (session.status === 'loading') return <h1>Lodding...</h1>;
+  if (session.status === 'authenticated') return router.push('/dashboard');
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -52,9 +56,14 @@ export default function Register({}: Props) {
         </button>
       </form>
       {err && <p className={styles.err}>Something went wrong!!</p>}
-      <Link href={`/dashboard/login`} className={styles.login}>
-        Login
-      </Link>
+      <div className={styles.others}>
+        <Link href={`/dashboard/login`} className={styles.item}>
+          Login
+        </Link>
+        <button onClick={() => signIn('github')} className={styles.item}>
+          Github
+        </button>
+      </div>
     </div>
   );
 }

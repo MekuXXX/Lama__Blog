@@ -45,9 +45,14 @@ export default function Login({}: Props) {
         </button>
       </form>
       {err && <p className={styles.err}>Something went wrong!!</p>}
-      <Link href={`/dashboard/register`} className={styles.register}>
-        Register
-      </Link>
+      <div className={styles.others}>
+        <Link href={`/dashboard/register`} className={styles.item}>
+          Register
+        </Link>
+        <button onClick={() => signIn('github')} className={styles.item}>
+          Github
+        </button>
+      </div>
     </div>
   );
 }
