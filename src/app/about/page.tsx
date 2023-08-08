@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './page.module.scss';
-import Button from '@/components/button/button';
+import Button from '@/components/button/Button';
 type Props = {};
 export default function About({}: Props) {
   return (
