@@ -59,10 +59,14 @@
       padding: 0.625rem;
       background: transparent;
       color: white;
+      outline: none;
       border: 0.125rem solid #bbb;
       font-size: 1rem;
       font-weight: bold;
       border-radius: $mainRadius;
+      &.light {
+        color: black;
+      }
     }
     .button {
       padding: 1rem 1.5rem;
@@ -92,7 +96,7 @@
           width: 100%;
         }
         .delete {
-          margin: 0 0 0.25rem 0;
+          margin: 0 0 0.25rem;
         }
       }
     }

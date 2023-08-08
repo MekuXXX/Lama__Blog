@@ -6,13 +6,8 @@ import User from '@/models/User';
 import bcrypt from 'bcrypt';
 const handler = NextAuth({
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    }),
     CredentialsProvider({
-      id: 'Crendentials',
-      name: 'Crendentials',
+      name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
@@ -38,9 +33,14 @@ const handler = NextAuth({
         }
       },
     }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    }),
   ],
   pages: {
     error: '/dashboard/login',
+    signIn: '/dashboard/login',
   },
 });
 

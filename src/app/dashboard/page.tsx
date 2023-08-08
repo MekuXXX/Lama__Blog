@@ -7,11 +7,13 @@ import Image from 'next/image';
 import { postType } from '../blog/page';
 import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useTheme } from '@/context/ThemeContext';
 type Props = {};
 export default function Dashboard({}: Props) {
   const [posts, setPosts] = useState<postType[]>([]);
   const session = useSession();
   const router = useRouter();
+  const { mode } = useTheme();
   const fetcher = async (...args: [RequestInfo, RequestInit?]) => {
     const res = await fetch(...args);
     const data = await res.json();
@@ -55,22 +57,20 @@ export default function Dashboard({}: Props) {
     <div className={styles.container}>
       <div className={styles.posts}>
         {posts?.map(post => (
-          <Link
-            href={`/blog/${post._id}`}
-            className={styles.post}
-            key={post._id}
-          >
+          <div className={styles.post} key={post._id}>
             <div className={styles.imgCont}>
               <Image src={post.img} alt='Posts image' fill={true} />
             </div>
-            <h1 className={styles.postTitle}>{post.title}</h1>
+            <Link href={`/blog/${post._id}`}>
+              <h1 className={styles.postTitle}>{post.title}</h1>
+            </Link>
             <span
               className={styles.delete}
               onClick={() => handleDelete(post._id as number)}
             >
               X
             </span>
-          </Link>
+          </div>
         ))}
       </div>
       <form className={styles.new} onSubmit={handleSubmit}>
@@ -78,24 +78,32 @@ export default function Dashboard({}: Props) {
         <input
           type='text'
           placeholder='Title'
-          className={styles.input}
+          className={`${styles.input} ${
+            mode === 'light' ? styles.light : styles.dark
+          }`}
           required
         />
         <input
           type='text'
           placeholder='Description'
-          className={styles.input}
+          className={`${styles.input} ${
+            mode === 'light' ? styles.light : styles.dark
+          }`}
           required
         />
         <input
           type='text'
           placeholder='Image'
-          className={styles.input}
+          className={`${styles.input} ${
+            mode === 'light' ? styles.light : styles.dark
+          }`}
           required
         />
         <textarea
           placeholder='Content'
-          className={styles.textArea}
+          className={`${styles.textArea} ${
+            mode === 'light' ? styles.light : styles.dark
+          }`}
           cols={30}
           rows={10}
           required

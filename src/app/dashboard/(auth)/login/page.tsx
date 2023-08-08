@@ -16,7 +16,12 @@ export default function Login({}: Props) {
       email: (e.target as unknown as any)[0].value,
       password: (e.target as unknown as any)[1].value,
     };
-    signIn('credentials', data);
+    signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: true,
+      callbackUrl: '/dashboard',
+    });
   };
   if (session.status === 'loading') return <h1>Lodding...</h1>;
   if (session.status === 'authenticated') return router.push('/dashboard');
