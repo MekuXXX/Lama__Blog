@@ -1,40 +1,40 @@
-'use client';
-import Link from 'next/link';
-import styles from './Navbar.module.scss';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import ModeButton from '../modeButton/ModeButton';
-import { signOut, useSession } from 'next-auth/react';
+"use client";
+import Link from "next/link";
+import styles from "./Navbar.module.scss";
+import { Suspense, useEffect, useRef, useState } from "react";
+import ModeButton from "../modeButton/ModeButton";
+import { signOut, useSession } from "next-auth/react";
 type Props = {};
 const links = [
   {
     id: 1,
-    title: 'Home',
-    url: '/',
+    title: "Home",
+    url: "/",
   },
   {
     id: 2,
-    title: 'Portfolio',
-    url: '/portfolio',
+    title: "Portfolio",
+    url: "/portfolio",
   },
   {
     id: 3,
-    title: 'Blog',
-    url: '/blog',
+    title: "Blog",
+    url: "/blog",
   },
   {
     id: 4,
-    title: 'About',
-    url: '/about',
+    title: "About",
+    url: "/about",
   },
   {
     id: 5,
-    title: 'Contact',
-    url: '/contact',
+    title: "Contact",
+    url: "/contact",
   },
   {
     id: 6,
-    title: 'Dashboard',
-    url: '/dashboard',
+    title: "Dashboard",
+    url: "/dashboard",
   },
 ];
 export default function Navbar({}: Props) {
@@ -49,28 +49,28 @@ export default function Navbar({}: Props) {
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
       // Clean up the event listener on unmount
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
   return (
     <nav className={styles.container}>
-      <Link href={'/'} className={styles.logo}>
-        MekuX
+      <Link href={"/"} className={styles.logo}>
+        Lama Blog
       </Link>
       <div className={styles.rightSide}>
         <ModeButton />
-        <div className={`${styles.links} ${active ? styles.active : ''}`}>
-          {links.map(link => (
+        <div className={`${styles.links} ${active ? styles.active : ""}`}>
+          {links.map((link) => (
             <Link href={link.url} key={link.id} className={styles.link}>
               {link.title}
             </Link>
           ))}
         </div>
-        {session.status === 'authenticated' && (
+        {session.status === "authenticated" && (
           <button className={styles.logout} onClick={() => signOut()}>
             Logout
           </button>
@@ -78,18 +78,18 @@ export default function Navbar({}: Props) {
 
         <div
           className={styles.menu}
-          onClick={() => setActive(prev => !prev)}
+          onClick={() => setActive((prev) => !prev)}
           ref={menuRef}
         >
           <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='1em'
-            height='1em'
-            viewBox='0 0 24 24'
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 24 24"
           >
             <path
-              fill='currentColor'
-              d='M3 18h13v-2H3v2zm0-5h10v-2H3v2zm0-7v2h13V6H3zm18 9.59L17.42 12L21 8.41L19.59 7l-5 5l5 5L21 15.59z'
+              fill="currentColor"
+              d="M3 18h13v-2H3v2zm0-5h10v-2H3v2zm0-7v2h13V6H3zm18 9.59L17.42 12L21 8.41L19.59 7l-5 5l5 5L21 15.59z"
             ></path>
           </svg>
         </div>

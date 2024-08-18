@@ -1,7 +1,11 @@
-import styles from './page.module.scss';
-import Image from 'next/image';
-import Link from 'next/link';
+import connectDB from "@/utils/db/connectDB";
+import styles from "./page.module.scss";
+import Image from "next/image";
+import Link from "next/link";
+import Post from "@/models/Post";
+
 type Props = {};
+
 export type postType = {
   _id?: number;
   username: string;
@@ -10,27 +14,21 @@ export type postType = {
   img: string;
   description: string;
 };
-async function getData() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Failed fetch data');
-  return res.json();
-}
 
 export default async function Blog({}: Props) {
-  const data: postType[] = await getData();
-  console.log(data);
+  await connectDB(process.env.MONGO_URI as string);
+  const posts = await Post.find();
+
   return (
     <div className={styles.container}>
       <h1 className={styles.mainTitle}>Blogs</h1>
-      {data.map(post => (
+      {posts.map((post) => (
         <Link href={`/blog/${post._id}`} className={styles.item} key={post._id}>
           <div className={styles.imgCont}>
             <Image
               priority={true}
               src={post.img}
-              alt='Category image'
+              alt="Category image"
               className={styles.img}
               fill={true}
             />

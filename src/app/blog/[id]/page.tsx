@@ -1,19 +1,18 @@
-import { notFound } from 'next/navigation';
-import { postType } from '../page';
-import styles from './page.module.scss';
-import Image from 'next/image';
-import { Metadata } from 'next';
+import { notFound } from "next/navigation";
+import { postType } from "../page";
+import styles from "./page.module.scss";
+import Image from "next/image";
+import { Metadata } from "next";
+import Post from "@/models/Post";
+import connectDB from "@/utils/db/connectDB";
 type Props = {
   params: { id: string };
 };
 
 async function getData(id: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${id}`,
-    { next: { revalidate: 60 } },
-  );
-  if (!res.ok) return notFound();
-  return res.json();
+  await connectDB(process.env.MONGO_URI as string);
+  const post = await Post.findById(id);
+  return post;
 }
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const post: postType = await getData(params.id);
@@ -25,6 +24,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 export default async function BlogPost({ params: { id } }: Props) {
   const post: postType = await getData(id);
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -38,7 +38,7 @@ export default async function BlogPost({ params: { id } }: Props) {
           <div className={styles.author}>
             <Image
               src={post.img}
-              alt=''
+              alt=""
               width={40}
               height={40}
               className={styles.avatar}
@@ -49,7 +49,7 @@ export default async function BlogPost({ params: { id } }: Props) {
         <div className={styles.imageContainer}>
           <Image
             src={post.img}
-            alt='Blog image'
+            alt="Blog image"
             fill={true}
             className={styles.image}
           />
